@@ -1,0 +1,43 @@
+[meta]
+committer_name  = "Bron Gondwana"
+committer_email = "brong@fastmailteam.com"
+
+[local]
+path = "/tmp/tag-minter/cyrus-fm"
+target_branch = "deploy"
+upstream_base = "github/master"
+clone = true
+
+[remote.github]
+interface_class = "App::MintTag::Remote::GitHub"
+api_url = "https://api.github.com"
+api_key = "ENV:GITHUB_API_TOKEN"
+repo = "cyrusimap/cyrus-imapd"
+
+[remote.gitlab]
+interface_class = "App::MintTag::Remote::GitLab"
+api_url = "https://gitlab.fm/api/v4"
+api_key = "ENV:GITLAB_API_TOKEN"
+repo = "fastmail/cyrus-imapd"
+
+[[build_steps]]
+name = "github"
+remote = "github"
+label = "include-in-fastmail"
+trusted_org = "fastmail"
+
+[[build_steps]]
+name = "github"
+remote = "github"
+label = "dev-brong"
+trusted_org = "fastmail"
+
+[[build_steps]]
+name = "capstone"
+remote = "gitlab"
+label = "include-in-fastmail"
+trusted_org = "fastmail"
+tag_prefix = "fm-brong"
+rebase = true
+push_tag_to = "gitlab"
+
